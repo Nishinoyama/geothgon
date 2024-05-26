@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        tools:layout_editor_absoluteX="-33dp"
+        tools:layout_editor_absoluteY="117dp">
 
         <TextView
             android:id="@+id/textView2"
@@ -29,17 +29,22 @@
 
             <Button
                 android:id="@+id/buttonPointing"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:backgroundTint="#561FD6"
+                android:textColor="#EDEDED"
                 android:text="Point!" />
 
             <Button
                 android:id="@+id/buttonAreaCalc"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#D64B1F"
+                android:textColor="#EDEDED"
                 android:text="Calculate Area!" />
         </LinearLayout>
 
