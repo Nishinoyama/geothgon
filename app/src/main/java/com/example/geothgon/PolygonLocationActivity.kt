@@ -24,6 +24,9 @@ class PolygonLocationActivity : AppCompatActivity(), LocationListener {
     private lateinit var pointsTextView: TextView
     private lateinit var pointNowTextView: TextView
     private lateinit var areaEvalTextView: TextView
+
+    private val fakePointProvider = FakePointProvider()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -50,6 +53,7 @@ class PolygonLocationActivity : AppCompatActivity(), LocationListener {
 
         findViewById<Button>(R.id.buttonPointing).setOnClickListener {
             val point = Pair(latitude, longitude)
+            fakePointProvider.next()
             if (!points.contains(point)) {
                 points.add(point)
             }
@@ -119,8 +123,11 @@ class PolygonLocationActivity : AppCompatActivity(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         Log.d("Location", "Location changed: $location")
-        latitude = location.latitude
-        longitude = location.longitude
+//        latitude = location.latitude
+//        longitude = location.longitude
+        val point = fakePointProvider.get()
+        latitude = point.first
+        longitude = point.second
         pointNowTextView.text = "Point now: ($latitude, $longitude)"
     }
 
@@ -130,5 +137,24 @@ class PolygonLocationActivity : AppCompatActivity(), LocationListener {
 
     override fun onProviderDisabled(provider: String) {
         Log.d("Location", "Provider disabled: $provider")
+    }
+}
+
+class FakePointProvider {
+    private var index = 0
+    private val points: List<Pair<Double, Double>> = listOf(
+        Pair(36.0969427,140.1036829), // 平砂学生宿舎
+        Pair(36.0869012,140.1069806), // 筑波大学情報学図書館
+        Pair(36.0833675,140.1104388), // つくば駅（TX）
+        Pair(36.0858992,140.1167475), // 中央通りと東大通りの交差点
+        Pair(36.0905531,140.107655), // 栓抜き塔
+        Pair(36.1054803,140.1083035), // 東大通り道中
+        Pair(36.1024839,140.1006331), // ミニストップつくば市天久保店
+    )
+    fun next() {
+        index = (index + 1) % points.size
+    }
+    fun get(): Pair<Double, Double> {
+        return points[index]
     }
 }
